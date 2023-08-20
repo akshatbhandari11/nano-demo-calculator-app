@@ -2,7 +2,7 @@
 
 crow::response greet()
 {
-    return crow::response{"Hello world!\n"};
+    return crow::response{"Hello world!"};
 }
 
 crow::response add(const crow::request &req)
@@ -13,19 +13,14 @@ crow::response add(const crow::request &req)
         return crow::response(400, "Invalid JSON");
     }
 
-    if (!input.has("first") || !input.has("second"))
-    {
-        return crow::response(400, "Missing 'first' or 'second' in JSON");
-    }
-
     double first = input["first"].d();
     double second = input["second"].d();
     double result = first + second;
 
-    crow::json::wvalue response_json;
-    response_json["result"] = result;
+    crow::json::wvalue response;
+    response["result"] = result;
 
-    return crow::response(200, response_json);
+    return crow::response{response};
 }
 
 crow::response subtract(const crow::request &req)
@@ -35,18 +30,12 @@ crow::response subtract(const crow::request &req)
     {
         return crow::response(400, "Invalid JSON");
     }
-
-    if (!input.has("first") || !input.has("second"))
-    {
-        return crow::response(400, "Missing 'first' or 'second' in JSON");
-    }
-
     double first = input["first"].d();
     double second = input["second"].d();
     double result = first - second;
 
-    crow::json::wvalue response_json;
-    response_json["result"] = result;
+    crow::json::wvalue response;
+    response["result"] = result;
 
-    return crow::response(200, response_json);
+    return crow::response{response};
 }
